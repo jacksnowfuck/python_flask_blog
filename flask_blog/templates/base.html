@@ -7,9 +7,18 @@
     <title>{{ user.name }}'s Watchlist</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('settings') }}">Settings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    {% endif %}
     {% endblock %}
 </head>
 <body>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
     <h2>
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
         {{ user.name }}'s Watchlist
