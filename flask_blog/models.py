@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -22,3 +24,9 @@ class Movie(db.Model):  # 表名将会是 movie
     id = db.Column(db.Integer, primary_key=True)  # 主键
     title = db.Column(db.String(60))  # 电影标题
     year = db.Column(db.String(4))  # 电影年份
+
+class Comment(db.Model):  # 表名将会是 comment
+    id = db.Column(db.Integer, primary_key=True)  # 主键
+    user = db.Column(db.String(20))  # 昵称
+    comment = db.Column(db.String(600))  # 评论内容
+    add_time = db.Column(db.DateTime, default=datetime.now)  # 评论时间
