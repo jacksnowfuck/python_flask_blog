@@ -62,11 +62,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        if not username or password:
-            flash('请填写完整信息')
-            return redirect(url_for('login'))
-
         user = User.query.first()
+        print(user)
         if username == user.username and user.validate_password(password):
             login_user(user)
             flash('登录成功')
@@ -99,4 +96,4 @@ def settings():
         flash('修改成功')
         return redirect(url_for('index'))
 
-    return render_template('setting.html')
+    return render_template('settings.html')
