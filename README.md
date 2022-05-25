@@ -1,2 +1,2 @@
 # python_flask_blog
-#### 一个 flask写的，练手
+#### 一个 flask写的博客，练手
