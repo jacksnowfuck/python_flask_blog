@@ -4,27 +4,26 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 
 from flask_blog import app, db
-from flask_blog.models import User, Movie
+from flask_blog.models import User, Movie, Comment
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
         if not current_user.is_authenticated:
             return redirect(url_for('index'))
-        title = request.form.get('title')
-        year = request.form.get('year')
-        if not title or not year or len(year) > 4 or len(title) > 60:
-            flash('Invalid input.')  # 显示错误提示
-            return redirect(url_for('index'))  # 重定向回主页
-        movie = Movie(title=title, year=year)
-        db.session.add(movie)
+        content = request.form.get('content')
+        comment_user = request.form.get('comment_user')
+        if content and comment_user:
+            comment = Comment(comment_user=comment_user, content=content)
+            db.session.add(comment)
         db.session.commit()
-        flash('条例创建成功')
+        flash('创建成功')
         return redirect(url_for('index'))
 
     movies = Movie.query.all()
-    return render_template('index.html', movies=movies)
+    comments = Comment.query.all()
+    return render_template('index.html', movies=movies, comments=comments)
 
 @app.route('/movie/edit/<int:movie_id>', methods=['GET', 'POST'])
 @login_required
@@ -49,12 +48,21 @@ def edit(movie_id):
 
 @app.route('/movie/delete/<int:movie_id>', methods=['POST'])
 @login_required
-def delete(movie_id):
+def delete_movie(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     db.session.delete(movie)
     db.session.commit()
     flash('删除条例')
     return redirect(url_for('index'))
+
+@app.route('/comment/delete/<int:comment_id>', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('删除评论')
+    return redirect(url_for('admin'))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -97,3 +105,20 @@ def settings():
         return redirect(url_for('index'))
 
     return render_template('settings.html')
+
+@app.route('/admin', methods=['GET','POST'])
+@login_required
+def admin():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        year = request.form.get('year')
+        if title and year:
+            movie = Movie(title=title, year=year)
+            db.session.add(movie)
+        db.session.commit()
+        flash('创建成功')
+        return redirect(url_for('admin'))
+
+    movies = Movie.query.all()
+    comments = Comment.query.all()
+    return render_template('admin.html',movies=movies, comments=comments)

@@ -8,10 +8,14 @@
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% if current_user.is_authenticated %}
+    <span class="float-right">
         <li><a href="{{ url_for('settings') }}">Settings</a></li>
         <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </span>
     {% else %}
+    <span class="float-right">
         <li><a href="{{ url_for('login') }}">Login</a></li>
+    </span>
     {% endif %}
     {% endblock %}
 </head>
