@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>{{ movies|length }} Titles</p>
-<ul class="movie-list">
-    {% for movie in movies %}
-    <li>{{ movie.title }} - {{ movie.year }}
+<p>{{ articles|length }} Titles</p>
+<ul class="article-list">
+    {% for article in articles %}
+    <li>
+        <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
         <span class="float-right">
-            <a class="imdb" href="https://www.imdb.com/find?q={{ movie.title }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
             {% if current_user.is_authenticated %}
-            <a class="btn" href="{{ url_for('edit', movie_id=movie.id) }}">Edit</a>
-            <form class="inline-form" method="post" action="{{ url_for('delete_movie', movie_id=movie.id) }}">
+            <a class="btn" href="{{ url_for('edit', article_id=article.article_id) }}">Edit</a>
+            <form class="inline-form" method="post" action="{{ url_for('delete_article', article_id=article.article_id) }}">
                 <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
             </form>
             {% endif %}
@@ -18,12 +18,12 @@
     {% endfor %}
 </ul>
 <p>{{ comments|length }} 评论</p>
-<ul class="movie-list">
+<ul class="article-list">
     {% for comment in comments %}
     <li>{{ comment.content }}
         <span class="float-right">
             {{ comment.add_time }} @ {{ comment.comment_user }}
-            <form class="inline-form" method="post" action="{{ url_for('delete_comment', comment_id=comment.id) }}">
+            <form class="inline-form" method="post" action="{{ url_for('delete_comment', comment_id=comment.comment_id) }}">
                 <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
             </form>
         </span>
@@ -32,10 +32,10 @@
 </ul>
 {% if current_user.is_authenticated %}
 <form method="post">
-    <textarea name="content" rows="8" cols="40">评论</textarea></br></br>
-    <input type="text" name="comment_user" autocomplete="off" required placeholder="昵称"></br></br>
-    <input class="btn" type="submit" name="submit1" value="提交">
+    标题 <input type="text" name="title" autocomplete="off" required>
+    内容 <textarea name="content" rows="50" cols="100" placeholder="内容"></textarea></br></br>
+    <input type="hidden" name="id" value="{{ user.id }}">
+    <input class="btn" type="submit" name="submit" value="Add">
 </form>
 {%  endif %}
-<img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}" title="to~to~ro~">
 {% endblock %}

@@ -1,32 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>{{ movies|length }} Titles</p>
-<ul class="movie-list">
-    {% for movie in movies %}
-    <li>{{ movie.title }} - {{ movie.year }}
-        <span class="float-right">
-            <a class="imdb" href="https://www.imdb.com/find?q={{ movie.title }}" target="_blank" title="Find this movie on IMDb">IMDb</a>
-        </span>
+<p>{{ articles|length }} Titles</p>
+<ul class="article-list">
+    {% for article in articles %}
+    <li>
+        <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
     </li>
     {% endfor %}
 </ul>
-<p>{{ comments|length }} 评论</p>
-<ul class="movie-list">
-    {% for comment in comments %}
-    <li>{{ comment.content }}
-        <span class="float-right">
-            {{ comment.add_time }} @ {{ comment.comment_user }}
-        </span>
-    </li>
-    {% endfor %}
-</ul>
-{% if current_user.is_authenticated %}
-<form method="post">
-    <textarea name="content" rows="8" cols="40" placeholder="评论"></textarea></br></br>
-    <input type="text" name="comment_user" autocomplete="off" required placeholder="昵称"></br></br>
-    <input class="btn" type="submit" name="submit1" value="提交">
-</form>
-{%  endif %}
-<img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}" title="to~to~ro~">
 {% endblock %}

@@ -24,9 +24,9 @@ login_manager.login_view = 'login'
 db = SQLAlchemy(app)
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(id):
     from flask_blog.models import User
-    user = User.query.get(int(user_id))
+    user = User.query.get(int(id))
     return user
 
 @app.context_processor

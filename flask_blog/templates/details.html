@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ article.title }}</h2>
+<p> - {{ article.add_time }}</p>
+<p>{{ article.content }}</p>
+<p>{{ comments|length }} 评论</p>
+<ul class="article-list">
+    {% for comment in comments %}
+    <li>{{ comment.content }}
+        <span class="float-right">
+            {{ comment.add_time }} @ {{ comment.comment_user }}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+<form method="post">
+    <textarea name="content" rows="8" cols="40" placeholder="评论"></textarea></br></br>
+    <input type="text" name="comment_user" autocomplete="off" required placeholder="昵称"></br></br>
+    <input class="btn" type="submit" name="submit1" value="提交">
+</form>
+{% endblock %}

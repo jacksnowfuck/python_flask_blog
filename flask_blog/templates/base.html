@@ -4,8 +4,8 @@
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.name }}'s Watchlist</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>{{ user.username }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% if current_user.is_authenticated %}
     <span class="float-right">
@@ -24,8 +24,8 @@
         <div class="alert">{{ message }}</div>
     {% endfor %}
     <h2>
-        <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
-        {{ user.name }}'s Watchlist
+        <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/maxbon.jpeg') }}">
+        {{ user.username }}
     </h2>
     <nav>
         <ul>

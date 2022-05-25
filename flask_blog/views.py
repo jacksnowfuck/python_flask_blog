@@ -4,53 +4,61 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 
 from flask_blog import app, db
-from flask_blog.models import User, Movie, Comment
+from flask_blog.models import User, Article, Comment
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
+    articles = Article.query.all()
+    comments = Comment.query.all()
+    return render_template('index.html', articles=articles, comments=comments)
+
+@app.route('/article/<int:article_id>', methods=['GET','POST'])
+def details(article_id):
     if request.method == 'POST':
-        if not current_user.is_authenticated:
-            return redirect(url_for('index'))
         content = request.form.get('content')
         comment_user = request.form.get('comment_user')
+        if not content or not comment_user or len(comment_user) > 20 or len(content) > 500:
+            flash('请认真填写')
+            return redirect(url_for('index'))
         if content and comment_user:
-            comment = Comment(comment_user=comment_user, content=content)
+            comment = Comment(comment_user=comment_user, content=content, article_id=article_id)
             db.session.add(comment)
-        db.session.commit()
+            db.session.commit()
         flash('创建成功')
-        return redirect(url_for('index'))
+        return redirect(url_for('details', article_id=article_id))
+    article = Article.query.get_or_404(article_id)
+    comments = Comment.query.filter_by(article_id=article_id).all()
 
-    movies = Movie.query.all()
-    comments = Comment.query.all()
-    return render_template('index.html', movies=movies, comments=comments)
+    return render_template('details.html', article=article, comments=comments)
 
-@app.route('/movie/edit/<int:movie_id>', methods=['GET', 'POST'])
+@app.route('/article/edit/<int:article_id>', methods=['GET', 'POST'])
 @login_required
-def edit(movie_id):
-    movie = Movie.query.get_or_404(movie_id)
+def edit(article_id):
+    article = Article.query.get_or_404(article_id)
 
     if request.method == 'POST':
         title = request.form['title']
-        year = request.form['year']
-
-        if not title or not year or len(year) > 4 or len(title) > 60:
+        content = request.form['content']
+        id = request.form['id']
+        if not title or not content or len(title) > 60:
             flash('Invalid input.')  # 显示错误提示
-            return redirect(url_for('edit', movie_id=movie_id))  # 重定向回主页
+            return redirect(url_for('edit', article_id=article_id))  # 重定向回主页
 
-        movie.title = title
-        movie.year = year
+        article.title = title
+        article.content = content
+        article.id = id
         db.session.commit()
         flash('条例更新完成')
         return redirect(url_for('index'))
 
-    return render_template('edit.html', movie=movie)
+    return render_template('edit.html', article=article)
 
-@app.route('/movie/delete/<int:movie_id>', methods=['POST'])
+@app.route('/article/delete/<int:article_id>', methods=['POST'])
 @login_required
-def delete_movie(movie_id):
-    movie = Movie.query.get_or_404(movie_id)
-    db.session.delete(movie)
+def delete_article(article_id):
+    article = Article.query.get_or_404(article_id)
+    db.session.delete(article)
     db.session.commit()
     flash('删除条例')
     return redirect(url_for('index'))
@@ -111,14 +119,15 @@ def settings():
 def admin():
     if request.method == 'POST':
         title = request.form.get('title')
-        year = request.form.get('year')
-        if title and year:
-            movie = Movie(title=title, year=year)
-            db.session.add(movie)
+        content = request.form.get('content')
+        id = request.form.get('id')
+        if title and content:
+            article = Article(title=title, content=content, id=id)
+            db.session.add(article)
         db.session.commit()
         flash('创建成功')
         return redirect(url_for('admin'))
 
-    movies = Movie.query.all()
+    articles = Article.query.all()
     comments = Comment.query.all()
-    return render_template('admin.html',movies=movies, comments=comments)
+    return render_template('admin.html',articles=articles, comments=comments)
