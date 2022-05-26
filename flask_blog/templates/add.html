@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+{% if current_user.is_authenticated %}
+<form method="post">
+    标题 <input type="text" name="title" autocomplete="off" required>
+    {{ ckeditor.create() }}
+    <input type="hidden" name="id" value="{{ user.id }}">
+    <input class="btn" type="submit" name="submit" value="Add">
+</form>
+{{ ckeditor.load() }}
+{{ ckeditor.config() }}
+{%  endif %}
+{% endblock %}

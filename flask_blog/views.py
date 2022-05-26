@@ -50,7 +50,7 @@ def edit(article_id):
         article.id = id
         db.session.commit()
         flash('条例更新完成')
-        return redirect(url_for('index'))
+        return redirect(url_for('admin'))
 
     return render_template('edit.html', article=article)
 
@@ -61,7 +61,7 @@ def delete_article(article_id):
     db.session.delete(article)
     db.session.commit()
     flash('删除条例')
-    return redirect(url_for('index'))
+    return redirect(url_for('admin'))
 
 @app.route('/comment/delete/<int:comment_id>', methods=['POST'])
 @login_required
@@ -83,7 +83,7 @@ def login():
         if username == user.username and user.validate_password(password):
             login_user(user)
             flash('登录成功')
-            return redirect((url_for('index')))
+            return redirect((url_for('admin')))
 
         flash('认证失败')
         return redirect(url_for('login'))
@@ -117,9 +117,16 @@ def settings():
 @app.route('/admin', methods=['GET','POST'])
 @login_required
 def admin():
+    articles = Article.query.all()
+    comments = Comment.query.all()
+    return render_template('admin.html',articles=articles, comments=comments)
+
+@app.route('/admin/add', methods=['GET','POST'])
+@login_required
+def add():
     if request.method == 'POST':
         title = request.form.get('title')
-        content = request.form.get('content')
+        content = request.form.get('ckeditor')
         id = request.form.get('id')
         if title and content:
             article = Article(title=title, content=content, id=id)
@@ -127,7 +134,4 @@ def admin():
         db.session.commit()
         flash('创建成功')
         return redirect(url_for('admin'))
-
-    articles = Article.query.all()
-    comments = Comment.query.all()
-    return render_template('admin.html',articles=articles, comments=comments)
+    return render_template('add.html')

@@ -7,34 +7,40 @@
     <title>{{ user.username }}</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
-    {% if current_user.is_authenticated %}
-    <span class="float-right">
-        <li><a href="{{ url_for('settings') }}">Settings</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-    </span>
-    {% else %}
-    <span class="float-right">
-        <li><a href="{{ url_for('login') }}">Login</a></li>
-    </span>
-    {% endif %}
     {% endblock %}
 </head>
 <body>
+    <nav>
+        <ul class="layui-nav">
+            <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.is_authenticated %}
+    <span class="float-right">
+        <li><a href="{{ url_for('settings') }}">设置</a></li>
+        <li><a href="{{ url_for('logout') }}">登出</a></li>
+    </span>
+    {% else %}
+    <span class="float-right">
+        <li><a href="{{ url_for('login') }}">登入</a></li>
+    </span>
+    {% endif %}
+        </ul>
+    </nav>
+<div class="layui-container">
     {% for message in get_flashed_messages() %}
         <div class="alert">{{ message }}</div>
     {% endfor %}
-    <h2>
-        <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/maxbon.jpeg') }}">
-        {{ user.username }}
-    </h2>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-        </ul>
-    </nav>
+    <div class="layui-main">
     {% block content %}{% endblock %}
-    <footer>
-      <small></small>这是个footer</small>
-    </footer>
+    </div>
+</div>
+<div class="footer">
+    <div class="layui-col-md12 t-copy">
+        <span class="layui-breadcrumb">
+            <span><a href="https://beian.miit.gov.cn">湘ICP备19011898号</a></span>
+            <span class="layui-hide-xs">Poweed by <a href="http://typecho.org/" target="_blank" rel="nofollow">Typecho</a></span>
+            <span>Theme by <a href="https://www.echo.so" target="_blank">Echo</a></span>
+        </span>
+    </div>
+</div>
 </body>
 </html>

@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>{{ articles|length }} Titles</p>
-<ul class="article-list">
+<ul class="layui-row layui-col-space15 main">
     {% for article in articles %}
-    <li>
+    <li class="title-article list-card">
         <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
     </li>
     {% endfor %}

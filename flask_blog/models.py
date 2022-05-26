@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -24,11 +23,11 @@ class Article(db.Model):  # 表名将会是 article
     id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column(db.String(60))  # 标题
     content = db.Column(db.String())  # 内容
-    add_time = db.Column(db.DateTime, default=datetime.now().replace(microsecond=0))  # 评论时间
+    add_time = db.Column(db.DateTime, default=datetime.now)  # 评论时间
 
 class Comment(db.Model):  # 表名将会是 comment
     comment_id = db.Column(db.Integer, primary_key=True)  # 主键
     comment_user = db.Column(db.String(20))  # 昵称
     content = db.Column(db.String(600))  # 评论内容
     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id')) #文章id
-    add_time = db.Column(db.DateTime, default=datetime.now().replace(microsecond=0))  # 评论时间
+    add_time = db.Column(db.DateTime, default=datetime.now)  # 评论时间

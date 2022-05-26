@@ -24,18 +24,11 @@
         <span class="float-right">
             {{ comment.add_time }} @ {{ comment.comment_user }}
             <form class="inline-form" method="post" action="{{ url_for('delete_comment', comment_id=comment.comment_id) }}">
-                <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('确认删除?')">
             </form>
         </span>
     </li>
     {% endfor %}
 </ul>
-{% if current_user.is_authenticated %}
-<form method="post">
-    标题 <input type="text" name="title" autocomplete="off" required>
-    内容 <textarea name="content" rows="50" cols="100" placeholder="内容"></textarea></br></br>
-    <input type="hidden" name="id" value="{{ user.id }}">
-    <input class="btn" type="submit" name="submit" value="Add">
-</form>
-{%  endif %}
+<a href="{{ url_for('add') }}" class="button">添加文章</a>
 {% endblock %}
