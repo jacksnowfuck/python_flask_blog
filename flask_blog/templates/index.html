@@ -5,6 +5,7 @@
     {% for article in articles %}
     <li class="title-article list-card">
         <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
+        <div class="float-right">{{ article.add_time.replace(microsecond=0) }}</div>
     </li>
     {% endfor %}
 </ul>

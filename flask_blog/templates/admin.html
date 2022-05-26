@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div style="margin-top: 15px;margin-bottom: 15px;">
+    <a href="{{ url_for('add') }}" class="btn">添加文章</a>
+</div>
 <p>{{ articles|length }} Titles</p>
 <ul class="article-list">
     {% for article in articles %}
@@ -30,5 +33,4 @@
     </li>
     {% endfor %}
 </ul>
-<a href="{{ url_for('add') }}" class="button">添加文章</a>
 {% endblock %}

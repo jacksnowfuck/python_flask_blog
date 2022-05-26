@@ -25,22 +25,22 @@
     {% endif %}
         </ul>
     </nav>
-<div class="layui-container">
-    {% for message in get_flashed_messages() %}
-        <div class="alert">{{ message }}</div>
-    {% endfor %}
-    <div class="layui-main">
-    {% block content %}{% endblock %}
+    <div class="layui-container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+        <div class="layui-main">
+        {% block content %}{% endblock %}
+        </div>
     </div>
-</div>
-<div class="footer">
-    <div class="layui-col-md12 t-copy">
-        <span class="layui-breadcrumb">
-            <span><a href="https://beian.miit.gov.cn">湘ICP备19011898号</a></span>
-            <span class="layui-hide-xs">Poweed by <a href="http://typecho.org/" target="_blank" rel="nofollow">Typecho</a></span>
-            <span>Theme by <a href="https://www.echo.so" target="_blank">Echo</a></span>
-        </span>
+    <div class="footer">
+        <div class="layui-col-md12 t-copy">
+            <span class="layui-breadcrumb">
+                <span><a href="https://beian.miit.gov.cn">湘ICP备19011898号</a></span>
+                <span class="layui-hide-xs">Poweed by <a href="http://typecho.org/" target="_blank" rel="nofollow">Typecho</a></span>
+                <span>Theme by <a href="https://www.echo.so" target="_blank">Echo</a></span>
+            </span>
+        </div>
     </div>
-</div>
 </body>
 </html>

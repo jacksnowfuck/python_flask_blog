@@ -185,7 +185,8 @@ textarea {
     position:relative;
     margin:0 auto;
     padding:0 100px;
-    box-sizing:border-box
+    box-sizing:border-box;
+    padding-bottom: 60px;
 }
 
 .layui-container .main{
@@ -575,7 +576,10 @@ textarea {
     height:44px;
     line-height:44px;
     padding:0 15px;
-    background-color:#fff
+    overflow: hidden;
+    margin: 0;
+    background-color:#fff;
+    z-index: 9999;
 }
 
 .footer span {
@@ -1255,7 +1259,7 @@ input[name=year] {
 .btn {
     font-size: 12px;
     padding: 3px 5px;
-    margin-top: 10px;
+    margin-top: 0px;
     text-decoration: none;
     cursor: pointer;
     background-color: white;

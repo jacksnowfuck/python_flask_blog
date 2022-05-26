@@ -6,10 +6,10 @@
         <div class="layui-col-md9 layui-col-lg9">
             <div class="title-article text-center">
                 <h2>{{ article.title }}</h2>
-                <p> - {{ article.add_time }}</p>
+                <p> - {{ article.add_time.replace(microsecond=0) }}</p>
             </div>
             <div class="text" itemprop="articleBody">
-                <p>{{ article.content }}</p>
+                <p>{{ article.content|safe }}</p>
             </div>
             <div class="comment-text layui-form">
                 <p>{{ comments|length }} 评论</p>
@@ -28,7 +28,7 @@
 
 <form method="post">
     <textarea name="content" rows="8" cols="40" placeholder="评论"></textarea>
-    <input type="text" name="comment_user" autocomplete="off" required placeholder="昵称">
+    <input type="text" name="comment_user" autocomplete="off" required placeholder="昵称"><br><br>
     <input class="btn" type="submit" name="submit1" value="提交">
 </form>
 {% endblock %}
