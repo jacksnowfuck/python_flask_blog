@@ -9,7 +9,11 @@
                 <p> - {{ article.add_time.replace(microsecond=0) }}</p>
             </div>
             <div class="text" itemprop="articleBody">
-                <p>{{ article.content|safe }}</p>
+                <p>
+                    {% markdown %}
+                    {{ article.content }}
+                    {% endmarkdown %}
+                </p>
             </div>
             <div class="comment-text layui-form">
                 <p>{{ comments|length }} 评论</p>

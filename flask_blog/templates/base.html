@@ -5,24 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user.username }}</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/pygments.css') }}" type="text/css" media="screen" charset="utf-8">
     {% endblock %}
 </head>
 <body>
     <nav>
         <ul class="layui-nav">
-            <li><a href="{{ url_for('index') }}">首页</a></li>
-                {% if current_user.is_authenticated %}
-    <span class="float-right">
-        <li><a href="{{ url_for('settings') }}">设置</a></li>
-        <li><a href="{{ url_for('logout') }}">登出</a></li>
-    </span>
-    {% else %}
-    <span class="float-right">
-        <li><a href="{{ url_for('login') }}">登入</a></li>
-    </span>
-    {% endif %}
+            <li><a href="{{ url_for('index') }}">茅草屋</a></li>
+                <span class="float-right">
+                    <li><a href="{{ url_for('index') }}">首页</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('admin') }}">后台</a></li>
+                    <li><a href="{{ url_for('settings') }}">设置</a></li>
+                    <li><a href="{{ url_for('logout') }}">登出</a></li>
+                    {% endif %}
+                </span>
         </ul>
     </nav>
     <div class="layui-container">

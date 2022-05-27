@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import markdown
 from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 
 from flask_blog import app, db
 from flask_blog.models import User, Article, Comment
-
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -29,7 +29,6 @@ def details(article_id):
         return redirect(url_for('details', article_id=article_id))
     article = Article.query.get_or_404(article_id)
     comments = Comment.query.filter_by(article_id=article_id).all()
-
     return render_template('details.html', article=article, comments=comments)
 
 @app.route('/article/edit/<int:article_id>', methods=['GET', 'POST'])
@@ -126,7 +125,7 @@ def admin():
 def add():
     if request.method == 'POST':
         title = request.form.get('title')
-        content = request.form.get('ckeditor')
+        content = request.form.get('content')
         id = request.form.get('id')
         if title and content:
             article = Article(title=title, content=content, id=id)
