@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='editormd/css/editormd.preview.css') }}" />
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='editormd/editormd.js') }}"></script>
+<script src="{{ url_for('static', filename='editormd/lib/marked.min.js') }}"></script>
+<script src="{{ url_for('static', filename='editormd/lib/prettify.min.js') }}"></script>
 <div class="layui-row layui-col-space15 main">
         <div class="layui-col-md9 layui-col-lg9">
             <div class="title-article text-center">
                 <h2>{{ article.title }}</h2>
                 <p> - {{ article.add_time.replace(microsecond=0) }}</p>
             </div>
-            <div class="text" itemprop="articleBody">
+            <div class="text" itemprop="articleBody" id="markdown-view">
                 <p>
                     {% markdown %}
                     {{ article.content|safe }}
                     {% endmarkdown %}
-                    <script>hljs.highlightAll();</script>
                 </p>
             </div>
+            <script type="text/javascript">
+                $(function() {
+                    var testView = editormd.markdownToHTML("markdown-view", {
+                        // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+                        // htmlDecode : true,  // Enable / disable HTML tag encode.
+                        // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+                    });
+                });
+            </script>
             <div class="comment-text layui-form">
                 <p>{{ comments|length }} 评论</p>
                 <ul class="article-list">

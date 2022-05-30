@@ -4,16 +4,16 @@
 <div style="margin-top: 15px;margin-bottom: 15px;">
     <a href="{{ url_for('add') }}" class="btn">添加文章</a>
 </div>
-<p>{{ articles|length }} Titles</p>
+<p>{{ articles|length }} 文章</p>
 <ul class="article-list">
     {% for article in articles %}
     <li>
         <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
         <span class="float-right">
             {% if current_user.is_authenticated %}
-            <a class="btn" href="{{ url_for('edit', article_id=article.article_id) }}">Edit</a>
+            <a class="btn" href="{{ url_for('edit', article_id=article.article_id) }}">编辑</a>
             <form class="inline-form" method="post" action="{{ url_for('delete_article', article_id=article.article_id) }}">
-                <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                <input class="btn" type="submit" name="delete" value="删除" onclick="return confirm('确认删除?')">
             </form>
             {% endif %}
         </span>
@@ -27,7 +27,7 @@
         <span class="float-right">
             {{ comment.add_time }} @ {{ comment.comment_user }}
             <form class="inline-form" method="post" action="{{ url_for('delete_comment', comment_id=comment.comment_id) }}">
-                <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('确认删除?')">
+                <input class="btn" type="submit" name="delete" value="删除" onclick="return confirm('确认删除?')">
             </form>
         </span>
     </li>

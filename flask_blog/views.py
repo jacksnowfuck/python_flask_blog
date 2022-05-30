@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import markdown
 from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 
@@ -41,7 +40,7 @@ def edit(article_id):
         content = request.form['content']
         id = request.form['id']
         if not title or not content or len(title) > 60:
-            flash('Invalid input.')  # 显示错误提示
+            flash('输入不对劲')  # 显示错误提示
             return redirect(url_for('edit', article_id=article_id))  # 重定向回主页
 
         article.title = title
