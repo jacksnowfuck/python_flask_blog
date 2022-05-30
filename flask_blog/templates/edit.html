@@ -2,9 +2,20 @@
 
 {% block content %}
 <form method="post">
-    <br>标题 <br><input type="text" name="title" autocomplete="off" required value="{{ article.title }}"><br><br>
-    内容 <br><textarea name="content" rows="50" cols="100" placeholder="内容">{{ article.content }}</textarea><br><br>
+    <br>标题 <br><input type="text" name="title" autocomplete="off" required value="{{ article.title }}">
+    <br><br>内容 <div id="form-editor"><textarea  name="content" rows="50" cols="100" placeholder="内容">{{ article.content }}</textarea></div>
     <input type="hidden" name="id" value="{{ user.id }}">
-    <input class="btn" type="submit" name="submit" value="Update">
+    <input class="btn" type="submit" name="submit" value="更新">
 </form>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='editormd/editormd.min.js') }}"></script>
+<script type="text/javascript">
+    $(function() {
+        var editor = editormd("form-editor", {
+            // width  : "100%",
+            // height : "100%",
+            path   : "{{ url_for('static', filename='/editormd/lib/') }}"
+        });
+    });
+</script>
 {% endblock %}

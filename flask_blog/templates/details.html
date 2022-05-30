@@ -11,8 +11,9 @@
             <div class="text" itemprop="articleBody">
                 <p>
                     {% markdown %}
-                    {{ article.content }}
+                    {{ article.content|safe }}
                     {% endmarkdown %}
+                    <script>hljs.highlightAll();</script>
                 </p>
             </div>
             <div class="comment-text layui-form">
