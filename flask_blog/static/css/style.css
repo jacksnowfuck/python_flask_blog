@@ -1292,3 +1292,27 @@ input[name=year] {
     display: inline;
 }
 
+.parent {
+    position: relative;
+}
+
+.search {
+    width: 300px;
+    height: 40px;
+    line-height: 40px \9;
+    float: left;
+    padding: 0 8px;
+}
+
+.searchbtn {
+    position: absolute;
+    right: 0px;
+    height: 40px;
+    width: 60px;
+    float: right;
+    border: 2px solid;
+    border-radius: 5px;
+    border-color: grey;
+    background: white;
+    color: grey;
+}

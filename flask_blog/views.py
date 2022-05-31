@@ -2,15 +2,21 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
-
+from sqlalchemy import or_, desc
 from flask_blog import app, db
+from flask_sqlalchemy import Pagination
 from flask_blog.models import User, Article, Comment
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    articles = Article.query.all()
-    comments = Comment.query.all()
-    return render_template('index.html', articles=articles, comments=comments)
+    articles = Article.query.order_by(desc(Article.add_time)).all()
+    comments = Comment.query.order_by(desc(Comment.add_time)).all()
+    page = request.args.get('page', 1, type=int)
+    if page>len(articles) or page<1:
+        page = 1
+    current_page = Article.query.order_by(desc(Article.add_time)).paginate(page, per_page=8)
+    ret = current_page.items
+    return render_template('index.html', articles=ret, comments=comments, current_page=current_page)
 
 @app.route('/article/<int:article_id>', methods=['GET','POST'])
 def details(article_id):
@@ -27,7 +33,7 @@ def details(article_id):
         flash('创建成功')
         return redirect(url_for('details', article_id=article_id))
     article = Article.query.get_or_404(article_id)
-    comments = Comment.query.filter_by(article_id=article_id).all()
+    comments = Comment.query.filter_by(article_id=article_id).order_by(desc(Comment.add_time)).all()
     return render_template('details.html', article=article, comments=comments)
 
 @app.route('/article/edit/<int:article_id>', methods=['GET', 'POST'])
@@ -115,8 +121,8 @@ def settings():
 @app.route('/admin', methods=['GET','POST'])
 @login_required
 def admin():
-    articles = Article.query.all()
-    comments = Comment.query.all()
+    articles = Article.query.order_by(desc(Article.add_time)).all()
+    comments = Comment.query.order_by(desc(Comment.add_time)).all()
     return render_template('admin.html',articles=articles, comments=comments)
 
 @app.route('/admin/add', methods=['GET','POST'])
@@ -133,3 +139,13 @@ def add():
         flash('创建成功')
         return redirect(url_for('admin'))
     return render_template('add.html')
+
+@app.route('/search', methods=['GET','POST'])
+def search():
+    keyword = request.args.get('keyword')
+    result = Article.query.filter(or_(Article.title.contains(keyword),Article.content.contains(keyword))).order_by(desc(Article.add_time)).all()
+    if result:
+        return render_template('index.html', articles=result)
+    else:
+        flash('啥也没搜到')
+    return render_template('index.html')

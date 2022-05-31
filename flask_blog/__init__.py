@@ -6,10 +6,8 @@ import sys
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_markdown import markdown
 
 app = Flask(__name__)
-markdown(app)
 
 prefix = 'sqlite:////'
 if sys.platform.startswith('win'):
@@ -18,7 +16,6 @@ if sys.platform.startswith('win'):
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'

@@ -12,8 +12,10 @@
 </head>
 <body>
     <nav>
+
         <ul class="layui-nav">
-            <li><a href="{{ url_for('index') }}">茅草屋</a></li>
+
+            <li><a style="font-size:23px" href="{{ url_for('index') }}">茅草屋</a></li>
                 <span class="float-right">
                     <li><a href="{{ url_for('index') }}">首页</a></li>
                     {% if current_user.is_authenticated %}
@@ -25,19 +27,19 @@
         </ul>
     </nav>
     <div class="layui-container">
-        {% for message in get_flashed_messages() %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
-        <div class="layui-main">
-        {% block content %}{% endblock %}
-        </div>
+            {% for message in get_flashed_messages() %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+                <div class="layui-main">
+                {% block content %}{% endblock %}
+                </div>
     </div>
     <div class="footer">
         <div class="layui-col-md12 t-copy">
             <span class="layui-breadcrumb">
+                <span><a href="/">茅草屋</a></span>
+                <span lay-separator>/</span>
                 <span><a href="https://beian.miit.gov.cn">湘ICP备19011898号</a></span>
-                <span class="layui-hide-xs">Poweed by <a href="http://typecho.org/" target="_blank" rel="nofollow">Typecho</a></span>
-                <span>Theme by <a href="https://www.echo.so" target="_blank">Echo</a></span>
             </span>
         </div>
     </div>
