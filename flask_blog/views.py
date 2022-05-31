@@ -153,3 +153,8 @@ def search():
     else:
         flash('啥也没搜到')
     return render_template('index.html')
+
+@app.route('/list', methods=['GET'])
+def list():
+    articles = Article.query.all()
+    return render_template('list.html', articles=articles)

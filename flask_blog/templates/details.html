@@ -8,9 +8,9 @@
 <script src="{{ url_for('static', filename='editormd/lib/prettify.min.js') }}"></script>
 <div class="layui-row layui-col-space15 main">
         <div class="layui-col-md9 layui-col-lg9">
-            <div class="title-article text-center">
+            <div class="title-article text-left">
                 <h2>{{ article.title }}</h2>
-                <p> - {{ article.add_time.replace(microsecond=0) }}</p>
+                <p>Z先森 - {{ article.add_time.replace(microsecond=0) }}</p>
             </div>
             <div class="text" itemprop="articleBody" id="markdown-view">
                 <textarea>{{ article.content|safe}}</textarea>

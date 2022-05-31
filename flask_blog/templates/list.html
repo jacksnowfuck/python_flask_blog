@@ -12,25 +12,7 @@
     <li class="title-article list-card">
         <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
         <div class="float-right">{{ article.add_time.replace(microsecond=0) }}</div>
-        <div style="font-size:12px; color:grey">
-            {{ article.content | truncate(300) }}
-        </div>
     </li>
     {% endfor %}
 </ul>
-{% if current_page %}
-    {% if current_page.has_prev %}
-        <a href="/?page={{ current_page.prev_num }}">上一页</a>
-    {% endif %}
-
-    {% for i in current_page.iter_pages() %}
-        <a href="/?page={{ i }}">{{ i }}</a>
-    {% endfor %}
-
-    {% if current_page.has_next %}
-        <a href="/?page={{ current_page.next_num }}">下一页</a>
-    {% endif %}
-    当前页数：{{ current_page.page }}
-    一共有{{ current_page.total }}条数据
-{% endif %}
 {% endblock %}
