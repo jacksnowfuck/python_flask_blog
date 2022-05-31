@@ -4,7 +4,7 @@
 <div style="margin-top: 15px;margin-bottom: 15px;">
     <a href="{{ url_for('add') }}" class="btn">添加文章</a>
 </div>
-<p>{{ articles|length }} 文章</p>
+<p style="margin:10px">{{ articles|length }} 文章</p>
 <ul class="article-list">
     {% for article in articles %}
     <li>
@@ -20,7 +20,22 @@
     </li>
     {% endfor %}
 </ul>
-<p>{{ comments|length }} 评论</p>
+{% if current_page %}
+    {% if current_page.has_prev %}
+        <a href="admin?page={{ current_page.prev_num }}">上一页</a>
+    {% endif %}
+
+    {% for i in current_page.iter_pages() %}
+        <a href="admin?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+
+    {% if current_page.has_next %}
+        <a href="admin?page={{ current_page.next_num }}">下一页</a>
+    {% endif %}
+    当前页数：{{ current_page.page }}
+    一共有{{ current_page.total }}条数据
+{% endif %}
+<p style="margin:10px">{{ comments|length }} 评论</p>
 <ul class="article-list">
     {% for comment in comments %}
     <li>{{ comment.content }}

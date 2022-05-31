@@ -122,7 +122,12 @@ def settings():
 def admin():
     articles = Article.query.order_by(desc(Article.add_time)).all()
     comments = Comment.query.order_by(desc(Comment.add_time)).all()
-    return render_template('admin.html',articles=articles, comments=comments)
+    page = request.args.get('page', 1, type=int)
+    if page>len(articles) or page<1:
+        page = 1
+    current_page = Article.query.order_by(desc(Article.add_time)).paginate(page, per_page=8)
+    ret = current_page.items
+    return render_template('admin.html', articles=ret, comments=comments, current_page=current_page)
 
 @app.route('/admin/add', methods=['GET','POST'])
 @login_required
