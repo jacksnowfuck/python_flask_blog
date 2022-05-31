@@ -4,7 +4,6 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import or_, desc
 from flask_blog import app, db
-from flask_sqlalchemy import Pagination
 from flask_blog.models import User, Article, Comment
 
 @app.route('/', methods=['GET','POST'])
