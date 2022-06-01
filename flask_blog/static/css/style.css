@@ -186,7 +186,7 @@ textarea {
 .layui-container{
     position:relative;
     margin:0 auto;
-    padding:0 100px;
+    padding:0 200px;
     box-sizing:border-box;
     padding-bottom: 60px;
 }
@@ -1220,7 +1220,7 @@ textarea {
 nav ul {
     list-style-type: none;
     margin: 0;
-    padding: 0 100px;
+    padding: 0 200px;
     overflow: hidden;
     background-color: #fff;
 }
@@ -1507,3 +1507,10 @@ input[name=year] {
 .layui-icon-mute:before{content:"\e685"}
 .layui-icon-reduce-circle:before{content:"\e616"}
 .layui-icon-music:before{content:"\e690"}
+
+.page_ul {
+
+}
+.page_ul li{
+    display: inline;
+}

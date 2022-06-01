@@ -2,20 +2,22 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, login_user, logout_user, current_user
-from sqlalchemy import or_, desc
+from sqlalchemy import or_, desc, func
 from flask_blog import app, db
 from flask_blog.models import User, Article, Comment
 
 @app.route('/', methods=['GET','POST'])
 def index():
     articles = Article.query.order_by(desc(Article.add_time)).all()
-    comments = Comment.query.order_by(desc(Comment.add_time)).all()
+    comments = db.session.query(Comment.article_id, func.count(Comment.article_id)).group_by(Comment.article_id).all()
+    comments_counts = {id: counts for ids, counts in comments for id in str(ids).split()}
+    print(comments_counts['192'])
     page = request.args.get('page', 1, type=int)
     if page>len(articles) or page<1:
         page = 1
-    current_page = Article.query.order_by(desc(Article.add_time)).paginate(page, per_page=8)
+    current_page = Article.query.order_by(desc(Article.add_time)).paginate(page, per_page=8, error_out=False)
     ret = current_page.items
-    return render_template('index.html', articles=ret, comments=comments, current_page=current_page)
+    return render_template('index.html', articles=ret, current_page=current_page)
 
 @app.route('/article/<int:article_id>', methods=['GET','POST'])
 def details(article_id):

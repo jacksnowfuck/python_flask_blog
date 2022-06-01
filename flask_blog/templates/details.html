@@ -10,7 +10,7 @@
         <div class="layui-col-md9 layui-col-lg9">
             <div class="title-article text-left">
                 <h2 style="font-size:25px">{{ article.title }}</h2>
-                <p>Z先森 - {{ article.add_time.replace(microsecond=0) }}</p>
+                <p>Z先森 / {{ article.add_time.replace(microsecond=0) }} / {{ comments|length }} 条评论</p>
             </div>
             <div class="text" itemprop="articleBody" id="markdown-view">
                 <textarea>{{ article.content|safe}}</textarea>
@@ -33,10 +33,10 @@
                 </div>
             </div>
             <div class="comment-text layui-form">
-                <p>{{ comments|length }} 评论</p>
+                <p>{{ comments|length }} 条评论</p>
                 <ul class="article-list">
                     {% for comment in comments %}
-                    <li>{{ comment.content }}
+                    <li>{{ comment.content|safe }}
                         <span class="float-right">
                             {{ comment.add_time.replace(microsecond=0) }} @ {{ comment.comment_user }}
                         </span>

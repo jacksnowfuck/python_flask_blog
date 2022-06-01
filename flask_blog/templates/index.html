@@ -11,7 +11,7 @@
     {% for article in articles %}
     <li class="title-article list-card">
         <a style="font-size:23px" href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
-        <div class="float-right">{{ article.add_time.replace(microsecond=0) }}</div>
+        <div class="float-right"> 分类 / {{ article.article_id }} 条评论 / {{ article.add_time.replace(microsecond=0) }}</div>
         <p>
         <div style="font-size:14px; color:grey">
             {{ article.content | truncate(300) }}
@@ -20,18 +20,35 @@
     {% endfor %}
 </ul>
 {% if current_page %}
-    {% if current_page.has_prev %}
-        <a href="/?page={{ current_page.prev_num }}">上一页</a>
-    {% endif %}
+    <ul class="page_ul">
+        <li><a href="/?page=1">首页</a></li>
+        {% if current_page.has_prev %}
+            <li class="active"><a href="/?page={{ current_page.prev_num }}">上一页</a></li>
+        {% else %}
+            <li class="disabled"><a href="">上一页</a></li>
+        {% endif %}
 
-    {% for i in current_page.iter_pages() %}
-        <a href="/?page={{ i }}">{{ i }}</a>
-    {% endfor %}
+        {% for v in current_page.iter_pages(1,1,3,1) %}
+            {% if v %}
+                {% if v==current_page.page %}
+                    <li class="active"><a href="#">{{ v }}</a></li>
+                {% else %}
+                    <li><a href="/?page={{ v }}">{{ v }}</a></li>
+                {% endif %}
+            {% else %}
+                 <li class="disabled"><a href="">&hellip;</a></li>
+            {% endif %}
+        {% endfor %}
 
-    {% if current_page.has_next %}
-        <a href="/?page={{ current_page.next_num }}">下一页</a>
-    {% endif %}
-    当前页数：{{ current_page.page }}
-    一共有{{ current_page.total }}条数据
+        {% if current_page.has_next %}
+            <li class="active"><a href="/?page={{ current_page.next_num }}">下一页</a></li>
+        {% else %}
+            <li class="disabled"><a href="">下一页</a></li>
+        {% endif %}
+
+        <li><a href="/?page={{ current_page.pages }}">尾页</a></li>
+        <li>当前页数：{{ current_page.page }}</li>
+        <li>一共有{{ current_page.total }}条数据</li>
+    </ul>
 {% endif %}
 {% endblock %}
