@@ -10,9 +10,10 @@
 <ul class="layui-row layui-col-space15 main">
     {% for article in articles %}
     <li class="title-article list-card">
-        <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
+        <a style="font-size:23px" href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
         <div class="float-right">{{ article.add_time.replace(microsecond=0) }}</div>
-        <div style="font-size:12px; color:grey">
+        <p>
+        <div style="font-size:14px; color:grey">
             {{ article.content | truncate(300) }}
         </div>
     </li>

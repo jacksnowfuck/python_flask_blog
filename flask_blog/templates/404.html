@@ -1,12 +1,25 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>404 - 茅草屋</title>	
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/404.css') }}">
+</head>
+<body>
+	<div id="page-wrapper">    
+		<div class="page-blank-wrap">
+			<div class="site-error">
+				<h1 class="headline"><img src="{{ url_for('static', filename='images/404.png') }}" alt="404"></h1>
+				<div class="error-content">
+					<h4>海面雾气太大</h4><h4>受天气影响，该页无法正常显示</h4>
+					<h5> 你可以 <a href="{{ url_for('index') }}">返回首页</a> 。</h5>
+				</div>
+				<img src="{{ url_for('static', filename='images/error-bg.png') }}" style="padding:20px 0 120px;">
+			</div>
+		</div> 	   
+	</div>
 
-{% block content %}
-<ul class="article-list">
-    <li>
-        Page Not Found - 404
-        <span class="float-right">
-            <a href="{{ url_for('index') }}">Go Back</a>
-        </span>
-    </li>
-</ul>
-{% endblock %}
+</body></html>

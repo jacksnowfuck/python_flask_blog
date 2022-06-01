@@ -1317,6 +1317,10 @@ input[name=year] {
     color: grey;
 }
 
+.search_center {
+    transform: translate(0, 14%);
+}
+
 /** 图标字体 **/
 .layui-icon{
   font-family:"layui-icon" !important;

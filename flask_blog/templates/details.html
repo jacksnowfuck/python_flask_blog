@@ -9,7 +9,7 @@
 <div class="layui-row layui-col-space15 main">
         <div class="layui-col-md9 layui-col-lg9">
             <div class="title-article text-left">
-                <h2>{{ article.title }}</h2>
+                <h2 style="font-size:25px">{{ article.title }}</h2>
                 <p>Z先森 - {{ article.add_time.replace(microsecond=0) }}</p>
             </div>
             <div class="text" itemprop="articleBody" id="markdown-view">
@@ -26,6 +26,12 @@
                     });
                 });
             </script>
+            <div class="copy-text">
+                <div>
+                    <p>如无特殊说明，本博所有文章均为博主原创。</p>
+                    <p class="hidden-xs">如若转载，请注明出处：<a href="/article/{{ article_id }}">https://www.maxbon.cn/article/{{ article_id }}</a> </p>
+                </div>
+            </div>
             <div class="comment-text layui-form">
                 <p>{{ comments|length }} 评论</p>
                 <ul class="article-list">

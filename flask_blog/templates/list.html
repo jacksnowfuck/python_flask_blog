@@ -7,6 +7,7 @@
         <button type="prinary" class="searchbtn">搜索</button>
     </form>
 </div>
+<p>共有 {{ articles|length }} 文章</p>
 <ul class="layui-row layui-col-space15 main">
     {% for article in articles %}
     <li class="title-article list-card">

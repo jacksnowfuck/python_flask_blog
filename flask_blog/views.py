@@ -33,7 +33,7 @@ def details(article_id):
         return redirect(url_for('details', article_id=article_id))
     article = Article.query.get_or_404(article_id)
     comments = Comment.query.filter_by(article_id=article_id).order_by(desc(Comment.add_time)).all()
-    return render_template('details.html', article=article, comments=comments)
+    return render_template('details.html', article=article, comments=comments, article_id=str(article_id))
 
 @app.route('/article/edit/<int:article_id>', methods=['GET', 'POST'])
 @login_required
@@ -158,3 +158,7 @@ def search():
 def list():
     articles = Article.query.all()
     return render_template('list.html', articles=articles)
+
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
