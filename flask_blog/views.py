@@ -45,7 +45,7 @@ def edit(article_id):
         content = request.form['content']
         id = request.form['id']
         category = request.form['category']
-        if not title or not content or len(title) > 60:
+        if not title or not content or len(title) > 200:
             flash('输入不对劲')  # 显示错误提示
             return redirect(url_for('edit', article_id=article_id))  # 重定向回主页
 
