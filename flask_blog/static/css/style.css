@@ -571,7 +571,7 @@ textarea {
 
 /* 底部 */
 .footer {
-    position:fixed;
+/*    position:fixed; */
     left:0;
     right:0;
     bottom:0;
