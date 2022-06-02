@@ -11,7 +11,7 @@
     {% for article in articles %}
     <li class="title-article list-card">
         <a style="font-size:23px" href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
-        <div class="float-right"> 分类 / {{ article.article_id }} 条评论 / {{ article.add_time.replace(microsecond=0) }}</div>
+        <div class="float-right"> <a href="{{ url_for('category', category_name=article.category) }}">{{ article.category }}</a> / {{ article.add_time.replace(microsecond=0) }}</div>
         <p>
         <div style="font-size:14px; color:grey">
             {{ article.content | truncate(300) }}

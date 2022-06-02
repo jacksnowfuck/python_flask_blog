@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):  # 表名将会是 user（自动生成，小写
 class Article(db.Model):  # 表名将会是 article
     article_id = db.Column(db.Integer, primary_key=True)  # 主键
     id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    category = db.Column(db.String(20))
     title = db.Column(db.String(60))  # 标题
     content = db.Column(db.String())  # 内容
     add_time = db.Column(db.DateTime, default=datetime.now)  # 评论时间

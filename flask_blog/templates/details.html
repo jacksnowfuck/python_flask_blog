@@ -10,7 +10,7 @@
         <div class="layui-col-md9 layui-col-lg9">
             <div class="title-article text-left">
                 <h2 style="font-size:25px">{{ article.title }}</h2>
-                <p>Z先森 / {{ article.add_time.replace(microsecond=0) }} / {{ comments|length }} 条评论</p>
+                <p>Z先森 / <a href="{{ url_for('category', category_name=article.category) }}">{{ article.category }}</a> / {{ article.add_time.replace(microsecond=0) }} / {{ comments|length }} 条评论</p>
             </div>
             <div class="text" itemprop="articleBody" id="markdown-view">
                 <textarea>{{ article.content|safe}}</textarea>

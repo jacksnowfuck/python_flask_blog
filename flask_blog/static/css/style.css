@@ -1317,7 +1317,7 @@ input[name=year] {
     color: grey;
 }
 
-.search_center {
+.nav_center {
     transform: translate(0, 14%);
 }
 
@@ -1513,4 +1513,24 @@ input[name=year] {
 }
 .page_ul li{
     display: inline;
+}
+
+.list_down {
+    display: none;
+    /*通过hover选择器来显示菜单，此处默认为隐藏*/
+    position: absolute;
+    /*使得下拉列表向下覆盖*/
+    list-style-type: none;
+    /*取消ul的样式*/
+    padding: 0;
+    /*取消ul的padding*/
+}
+
+.list_down li {
+    display: block;
+}
+
+.layui-nav .button1:hover .list_down {
+    display: block;
+    /*显示下拉菜单*/
 }

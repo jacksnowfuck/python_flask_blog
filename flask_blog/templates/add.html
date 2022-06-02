@@ -3,6 +3,16 @@
 {% if current_user.is_authenticated %}
 <form method="post">
     <br>标题 <br><input type="text" name="title" autocomplete="off" required>
+    <br><br><label>分类</label>
+    <select name="category" required>
+        <option value="linux">linux</option>
+        <option value="db">db</option>
+        <option value="windows">windows</option>
+        <option value="vm">vm</option>
+        <option value="docker">docker</option>
+        <option value="bigdate">bigdate</option>
+        <option value="other">other</option>
+    </select>
     <br><br>内容 <div id="form-editor"><textarea  name="content" rows="50" cols="100" placeholder="内容"></textarea></div>
     <input type="hidden" name="id" value="{{ user.id }}">
     <input class="btn" type="submit" name="submit" value="发布">

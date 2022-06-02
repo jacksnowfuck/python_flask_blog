@@ -7,12 +7,12 @@
         <button type="prinary" class="searchbtn">搜索</button>
     </form>
 </div>
-<p>共有 {{ articles|length }} 文章</p>
+<p>{{ category }} 共有 {{ articles|length }} 文章</p>
 <ul class="layui-row layui-col-space15 main">
     {% for article in articles %}
     <li class="title-article list-card">
         <a href="{{ url_for('details', article_id=article.article_id) }}" >{{ article.title }}</a>
-        <div class="float-right"><a href="{{ url_for('category', category_name=article.category) }}">{{ article.category }}</a> / {{ article.add_time.replace(microsecond=0) }}</div>
+        <div class="float-right">{{ article.add_time.replace(microsecond=0) }}</div>
     </li>
     {% endfor %}
 </ul>

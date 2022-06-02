@@ -10,14 +10,12 @@ from flask_blog.models import User, Article, Comment
 def index():
     articles = Article.query.order_by(desc(Article.add_time)).all()
     comments = db.session.query(Comment.article_id, func.count(Comment.article_id)).group_by(Comment.article_id).all()
-    comments_counts = {id: counts for ids, counts in comments for id in str(ids).split()}
-    print(comments_counts['192'])
     page = request.args.get('page', 1, type=int)
     if page>len(articles) or page<1:
         page = 1
     current_page = Article.query.order_by(desc(Article.add_time)).paginate(page, per_page=8, error_out=False)
     ret = current_page.items
-    return render_template('index.html', articles=ret, current_page=current_page)
+    return render_template('index.html', articles=ret, current_page=current_page, comments=comments)
 
 @app.route('/article/<int:article_id>', methods=['GET','POST'])
 def details(article_id):
@@ -46,6 +44,7 @@ def edit(article_id):
         title = request.form['title']
         content = request.form['content']
         id = request.form['id']
+        category = request.form['category']
         if not title or not content or len(title) > 60:
             flash('输入不对劲')  # 显示错误提示
             return redirect(url_for('edit', article_id=article_id))  # 重定向回主页
@@ -53,6 +52,7 @@ def edit(article_id):
         article.title = title
         article.content = content
         article.id = id
+        article.category = category
         db.session.commit()
         flash('条例更新完成')
         return redirect(url_for('admin'))
@@ -66,7 +66,7 @@ def delete_article(article_id):
     db.session.delete(article)
     db.session.commit()
     flash('删除条例')
-    return redirect(url_for('admin'))
+    return redirect(request.referrer or url_for('admin'))
 
 @app.route('/comment/delete/<int:comment_id>', methods=['POST'])
 @login_required
@@ -75,7 +75,7 @@ def delete_comment(comment_id):
     db.session.delete(comment)
     db.session.commit()
     flash('删除评论')
-    return redirect(url_for('admin'))
+    return redirect(request.referrer or url_for('admin'))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -138,8 +138,9 @@ def add():
         title = request.form.get('title')
         content = request.form.get('content')
         id = request.form.get('id')
+        category = request.form.get('category')
         if title and content:
-            article = Article(title=title, content=content, id=id)
+            article = Article(title=title, content=content, id=id, category=category)
             db.session.add(article)
         db.session.commit()
         flash('创建成功')
@@ -164,3 +165,8 @@ def list():
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
+
+@app.route('/category/<category_name>', methods=['GET','POST'])
+def category(category_name):
+    articles = Article.query.filter_by(category=category_name).order_by(desc(Article.add_time)).all()
+    return render_template('category.html', articles=articles, category=category_name)
